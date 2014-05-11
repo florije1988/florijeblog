@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+
+{%block title%} Login {%endblock%}
+
+{%block extra_head%}
+  {{super()}}
+  <link rel="stylesheet" href="{{url_for('static', filename='login.css')}}" type="text/css" />
+{%endblock%}
+
+{%block header%}
+<a class="left" href="{{url_for('index')}}">
+  <span class="hint--bottom" data-hint="Go to index">
+    <i class="icon-home"></i>
+  </span>
+</a>
+{%endblock%}
+
+{%block content%}
+  <div class="login_box form-box">
+    <form action="{{url_for('do_login')}}" method="post" accept-charset="utf-8">
+      <div class="item">
+        <label>
+          Password
+        </label>
+       <input type="password" name="passwd" id="passwd" class="iput"/>
+     </div>
+     <div class="buttons item">
+       <button  class="btn-blue" type="submit" name="submit">Submit</button>
+     </div>
+    </form>
+  </div>
+{%endblock%}

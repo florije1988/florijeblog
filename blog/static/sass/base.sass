@@ -1,0 +1,32 @@
+@charset "utf-8"
+
+$red: #CC0033
+$gray777: #777
+// $black: #292928
+$black: #414243
+$dark: #666768
+$gray: #9d9e9f
+
+$width: 600px
+
+=transition($x)
+  -webkit-transition: all $x ease-in-out
+  -moz-transition: all $x ease-in-out
+  -o-transition: all $x ease-in-out
+  transition: all $x ease-in-out
+
+
+=border-radius($r: 4px)
+  -webkit-border-radius: $r
+  -moz-border-radius: $r
+  -ms-border-radius: $r
+  -o-border-radius: $r
+  border-radius: $r
+
+=ofl-font($font-size: 17px)
+  font: $font-size 'OFL Sorts Mill Goudy', 'OFL Sorts Mill Goudy TT', serif
+  font-weight: 200
+
+=bigtitle
+  +ofl-font(27px)
+  text-align: center

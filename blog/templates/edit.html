@@ -1,0 +1,78 @@
+{%extends "admin_layout.html"%}
+{% block extra_head %} 
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='editor/editor.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{url_for('static', filename='edit.css')}}" type="text/css" />
+<script type="text/javascript" src="{{url_for('static', filename='editor/editor.js')}}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='marked.js')}}"></script>
+{% endblock %}
+{%block title%}Edit | Admin{%endblock%}
+{%block tab_content%}
+<div class="editor-wrapper">
+  <form name="workspace" action="{{url_for('update_post', id=post.id)}}" method="post" accept-charset="utf-8">
+    <input name="title" class="title" type="text" placeholder="Title" id="title" value="{{post.title}}"/>
+    <input name="title_pic" class="title" type="text" placeholder="Title Picture Url" id="title_pic" value="{{post.title_pic}}" />
+    <input type="hidden" name="published" id="published" value={{post.published}} />
+    <textarea name="body" id="editor" placeholder="Content here ...">{{post.body}}</textarea>
+    <p class="btn-box">
+    <button type="submit" class="btn-white" onclick="preview(); return false;" >
+      <span class="icon-eye">Preview</span>
+    </button>
+    <button type="submit" class="btn-white" onclick="do_a_save();" >
+      <span class="icon-disk">Save</span>
+    </button>
+    <button type="submit" class="btn-white" onclick="drop_post(); return false;">
+      <span class="icon-remove">Drop</span>
+    </button>
+      {% if not post.published %}
+      <button type="submit" class="btn-blue" onclick="publish_post();" >
+        <span class="icon-blog">Publish</span>
+      </button>
+      {%endif%}
+    </p>
+  </form>
+</div>
+<script type="text/javascript">
+  var editor = new Editor();
+  editor.render();
+
+  var form = document.workspace
+
+  var do_a_save = function() {
+    editor.codemirror.save();
+    form.target = '_self';
+    form.action = '{{url_for("update_post", id=post.id)}}';
+    form.submit();
+  };
+
+  var preview = function() {
+    editor.codemirror.save();
+    form.target = '_blank';
+    form.action = '{{url_for("preview")}}';
+    form.submit();
+  };
+
+  var drop_post = function() {
+    if (confirm("Are you sure to delete this post ?")) {
+        do_drop_post();
+    }
+    return false;
+  };
+
+  var do_drop_post = function() {
+    form.target = '_self';
+    form.action = '{{url_for("delete", id=post.id)}}';
+    form.submit();
+  }
+
+  {% if not post.published %}
+  var publish_post = function() {
+    editor.codemirror.save();
+    form.target = '_self';
+    form.action = '{{url_for("update_post", id=post.id)}}';
+    form.published.value = 1;
+    form.submit()
+  };
+  {% endif %}
+</script>
+{%endblock%}

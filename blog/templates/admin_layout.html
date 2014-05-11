@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{%block title %} Admin {% endblock%}
+{% block extra_head %}
+<link rel="stylesheet" href="{{url_for('static', filename='admin.css')}}" type="text/css" />
+{% endblock %}
+
+{%block header%}
+<a class="left" href="{{url_for('index')}}">
+  <span class="hint--bottom" data-hint="Go to index">
+    <i class="icon-home"></i>
+  </span>
+</a>
+<a class="right" href="{{url_for('logout')}}">
+  <span class="hint--bottom" data-hint="Logout">
+    <i class="icon-switch"></i>
+  </span>
+</a>
+{%endblock%}
+
+{% block content %}
+  <div class="tabs">
+    <a href="{{url_for('write')}}" class="tab {% if active_tab == 'write' %}active{%endif%}">Write</a>
+    <a href="{{url_for('drafts')}}" class="tab {% if active_tab == 'drafts' %}active{%endif%}">Drafts</a>
+    <a href="{{url_for('settings')}}" class="tab {% if active_tab == 'settings' %}active{%endif%}">Settings</a>
+    <a href="{{url_for('author')}}" class="tab {% if active_tab == 'author'%}active{%endif%}">Author</a>
+    <a href="{{url_for('password')}}" class="tab {% if active_tab == 'password'%}active{%endif%}">Security</a>
+    {% if active_tab == 'eidt' %}
+    <a class="tab active">Edit</a>
+    {%endif%}
+  </div>
+  <div class="tab-content">{%block tab_content %} {% endblock %} </div>
+{%endblock%}
